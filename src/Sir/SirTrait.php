@@ -34,7 +34,10 @@ trait SirTrait {
 		$this->get('/_sir_redirect/{locale}/{name}', function(Request $request, $locale, $name) use ($app) {
 			$args = json_decode($request->get('args'), true);
 			$get = json_decode($request->get('get'), true);
-			$queryString = is_array($get) && count($get) > 0? '?'.http_build_query($get) : '';
+			if (!is_array($get)) $get = array();
+			$get['_locale_switched_from'] = $app['translator']->getLocale();
+
+			$queryString = '?'.http_build_query($get);
 
 			$app['translator']->setLocale($locale);
 
@@ -61,9 +64,11 @@ trait SirTrait {
 	 * @param string|null $routeName Route name or leave as NULL to use current route
 	 * @param array $args Arguments of route or leave to use current route's arguments if any
 	 * @param array $get The HTTP GET parameters used when redirecting - leave to use current route's
-	 * @return \Symfony\Component\HttpFoundation\Response
+	 * @return \Symfony\Component\HttpFoundation\Response|null NULL on $toLocale equals to current locale
 	 */
 	public function redirectSir($toLocale, $routeName=null, array $args=array(), array $get=array()) {
+		if ($this['translator']->getLocale() == $toLocale) return;
+
 		$sirRoute = $this->getSirRoute();
 		if ($routeName === null) {
 			if ($sirRoute === null) throw new \LogicException('SIR redirect must be initialized by Application::sirBeforeMiddleware().');
