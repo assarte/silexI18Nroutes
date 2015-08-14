@@ -126,7 +126,7 @@ class LoaderManager {
 			}
 
 			$ins = $controllers
-				->match($route['path'], $this->routes[$node]['classname'].'::'.$resolver)
+				->match($route['path'], $this->routes[$node]['controller'].$resolver)
 				->method($method)
 			;
 

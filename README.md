@@ -21,53 +21,76 @@ $app['sir']->add(new \Sir\CallbackLoader(function($language) use ($app) {
 	return $app['i18nroutes'][$language];
 });
 ...
+$app['sir']->loadRoutes('en');
+$app->mount($app['sir']->getNodeRoute('blog'), \Acme\Controllers\BlogActions::init($app));
+$app->mount($app['sir']->getNodeRoute('pagecontent'), \Acme\Controllers\PageActions::init($app));
+...
 ```
+A possible code for blog controller is:
+```php
+namespace Acme\Controllers
+
+use Silex\Application;
+use Silex\ControllerCollection;
+
+class GuestActions {
+	/**
+	 * @param Application $app
+	 * @return ControllerCollection
+	 */
+	public static function init(Application $app) {
+		$controllers = $app['sir']->registerRoutes('root');
+		return $controllers;
+	}
+}
+```
+
 Example contents of `routes.json` file:
 ```js
 {
 	'en': {
 		'blog': {
 			'path': '/blog',
-			'classname': 'Acme\\Controllers\\Blog',
+			'controller': 'Acme\\Controllers\\Blog\\',
 			'routes': [{
 				'path': '/post/{id}',
-				'action': 'GetPost',
+				'action': 'PostsAction::get',
 				'assert': {'id': '\\d+'}
 			}, {
 				'method': 'POST',
 				'path': '/post/{id}',
-				'action': 'PostPost',
+				'action': 'PostsAction::post',
 				'assert': {'id': '\\d+'}
 			}, {
 				'path': '/',
-				'action': 'GetList'
+				'action': 'PostsAction::list'
 			}]
 		},
 		'pagecontent': {
 			'path': '/page',
-			'classname': 'Acme\\Controller\\Page',
-			'default_resolver': 'GetPage',
+			'controller': 'Acme\\Controllers\\Page\\',
+			'default_resolver': 'PagesAction::get',
 			'routes': [{
 				'path': '/{path}'
 			}, {
 				'path': '/{path}',
 				'method': 'POST',
-				'action': 'PostPage'
+				'action': 'PagesAction::post'
 			}
 		}
 	},
 	'hu': {
 		'blog': {
 			'path': '/naplóm',
-			'classname': 'Acme\\Controllers\\Blog',
+			'controller': 'Acme\\Controllers\\Blog\\',
 			'routes': [{
 				'path': '/bejegyzés/{id}',
-				'action': 'GetPost',
+				'action': 'PostsAction::get',
 				'assert': {'id': '\\d+'}
 			}, {
 				'method': 'POST',
 				'path': '/bejegyzés/{id}',
-				'action': 'PostPost',
+				'action': 'PostsAction::post',
 				'assert': {'id': '\\d+'}
 			}, {
 				'path': '/',
@@ -76,14 +99,14 @@ Example contents of `routes.json` file:
 		},
 		'pagecontent': {
 			'path': '/oldal',
-			'classname': 'Acme\\Controller\\Page',
-			'default_resolver': 'GetPage',
+			'controller': 'Acme\\Controllers\\Page\\',
+			'default_resolver': 'PagesAction::get',
 			'routes': [{
 				'path': '/{path}'
 			}, {
 				'path': '/{path}',
 				'method': 'POST',
-				'action': 'PostPage'
+				'action': 'PagesAction::post'
 			}
 		}
 	}
