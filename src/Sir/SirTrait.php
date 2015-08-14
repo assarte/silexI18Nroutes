@@ -38,7 +38,10 @@ trait SirTrait {
 
 			$app['translator']->setLocale($locale);
 
-			return $app->redirect($app['url_generator']->generate($name, $args).$queryString);
+			$response = $app->redirect($app['url_generator']->generate($name, $args).$queryString);
+			$response->headers->set('X-Sir-Redirection', '1');
+
+			return $response;
 		});
 	}
 
