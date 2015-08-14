@@ -71,7 +71,7 @@ trait SirTrait {
 			$get = $sirRoute['get'];
 		}
 
-		return $this['app']->redirect(
+		return $this->redirect(
 			'/_sir_redirect/'.$toLocale.'/'.$routeName.
 			'?args='.json_encode($args).
 			'&get='.json_encode($get)
