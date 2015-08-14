@@ -21,7 +21,7 @@ class LoaderManager {
 	protected $routes = array();
 
 	/**
-	 * @var Silex\Application
+	 * @var \Silex\Application
 	 */
 	protected $app;
 
@@ -31,9 +31,9 @@ class LoaderManager {
 	protected $language;
 
 	/**
-	 * @param Silex\Application $app
+	 * @param \Silex\Application $app
 	 */
-	public function __constructor(Silex\Application $app) {
+	public function __construct(\Silex\Application $app) {
 		$this->app = $app;
 	}
 
