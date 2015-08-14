@@ -137,6 +137,7 @@ You must be use the `before` middleware of Silex for getting use the helper meth
 $app->before(function (\Symfony\Component\HttpFoundation\Request $request) use ($app) {
 	$app->sirBeforeMiddleware(); // storing important routing data in session
 });
+$app->initRedirector(); // adding redirect controller used by redirectSir() method
 ...
 ```
 Now you can get the most important routing information whenever and wherever you want by calling `getSirRoute()`:

@@ -24,7 +24,12 @@ trait SirTrait {
 			'args'	=> $routeArgs,
 			'get'	=> $getParams
 		));
+	}
 
+	/**
+	 * Initializes the redirect controller used by redirectSir()
+	 */
+	public function initRedirector() {
 		$app = $this;
 		$this->get('/_sir_redirect/{locale}/{name}', function(Request $request, $locale, $name) use ($app) {
 			$args = json_decode($request->get('args'), true);
