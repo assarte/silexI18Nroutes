@@ -174,7 +174,7 @@ On redirection, SIR adding an `X-Sir-Redirection` HTTP header with value of `1` 
 
 There is an easy way for defining custom loader classes by implementing `\Sir\LoaderInterface`.
 
-# Disclaimer
+# Feedback notice
 This is a flexible but very light-weight solution for handling multi-lingual routes, not a space-ship. Please, consider use it as is.
 
 Any constructive feedbacks, suggestions/contributing kindly welcomed by Assarte (the author)!
