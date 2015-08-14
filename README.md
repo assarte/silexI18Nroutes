@@ -26,20 +26,21 @@ $app->mount($app['sir']->getNodeRoute('blog'), \Acme\Controllers\BlogActions::in
 $app->mount($app['sir']->getNodeRoute('pagecontent'), \Acme\Controllers\PageActions::init($app));
 ...
 ```
-A possible code for blog controller is:
+A possible code for blog controller collection is (`<...>/Controllers/BlogActions.php`):
 ```php
 namespace Acme\Controllers
 
 use Silex\Application;
 use Silex\ControllerCollection;
 
-class GuestActions {
+class BlogActions {
 	/**
 	 * @param Application $app
 	 * @return ControllerCollection
 	 */
 	public static function init(Application $app) {
-		$controllers = $app['sir']->registerRoutes('root');
+		// loads all routes defined for "blog" node, used classes and defined actions must be exists
+		$controllers = $app['sir']->registerRoutes('blog');
 		return $controllers;
 	}
 }
