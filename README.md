@@ -56,7 +56,8 @@ Example contents of `routes.json` file:
 			'routes': [{
 				'path': '/post/{id}',
 				'action': 'PostsAction::get',
-				'assert': {'id': '\\d+'}
+				'assert': {'id': '\\d+'},
+				'bind': 'blog_get_post'
 			}, {
 				'method': 'POST',
 				'path': '/post/{id}',
@@ -87,8 +88,9 @@ Example contents of `routes.json` file:
 			'routes': [{
 				'path': '/bejegyzés/{id}',
 				'action': 'PostsAction::get',
-				'assert': {'id': '\\d+'}
-			}, {
+				'assert': {'id': '\\d+'},
+				'bind': 'blog_get_post'
+		}, {
 				'method': 'POST',
 				'path': '/bejegyzés/{id}',
 				'action': 'PostsAction::post',
@@ -113,6 +115,57 @@ Example contents of `routes.json` file:
 	}
 }
 ```
+## Possible route items options
+ * `path`: The path used for the route. This is relative to the parent node's path.
+ * `method`: One or more HTTP methods, separated by `|`, to register the route for.
+ * `action`: Named action method (or in "class::method"-form) which would be executed on this route.
+ * `convert': Array of argument converters - see: http://silex.sensiolabs.org/doc/usage.html#route-variable-converters
+ * `assert`: Array of argument assertions - see: http://silex.sensiolabs.org/doc/usage.html#requirements
+ * `defaults`: Array of argument default values - see: http://silex.sensiolabs.org/doc/usage.html#default-values
+ * `bind`: Name of route - see: http://silex.sensiolabs.org/doc/usage.html#named-routes
+ * `https`: Define as `true` if want to require HTTPS to be used, `false` to deny HTTPS
+
+## Getting more help on handling I18N routes
+By using `Sir\SirTrait` trait in your `Application` you can get help for multi-lingual content redirection when switching between languages.
+
+### Initialize the trait
+You must be use the `before` middleware of Silex for getting use the helper methods:
+```php
+...
+// instancing your Silex application, etc.
+...
+$app->before(function (\Symfony\Component\HttpFoundation\Request $request) use ($app) {
+	$app->sirBeforeMiddleware(); // storing important routing data in session
+});
+...
+```
+Now you can get the most important routing information whenever and wherever you want by calling `getSirRoute()`:
+```php
+...
+$routeData = $app->getSirRoute();
+/*
+	Could contains something like:
+	- name: blog_get_post
+	- args:
+		- id: 42
+	- get:
+		- highlight: "searched,keywords,list"
+*/
+...
+```
+...and can use `redirectSir()` for generating a redirection response to switching locale and redirect to the locale-equivalent of current route:
+```php
+...
+// any controller code
+...
+return $app->redirectSir('hu'); // This will be changes current locale to "hu" and redirects the user agent
+...
+```
+The method `redirectSir()` has 3 more arguments detailed below:
+ * `$routeName`: for defining a different route than the current one
+ * `$args`: for defining different route arguments than the currents are
+ * `$get`: for defining different HTTP GET parameters than the currents are
+
 ## Suggestions for usage
 `\Sir\ArrayLoader` could be used best for loading static routes from configuration files, while `\Sir\CallbackLoader` could be better for use as dynamic contents route provider eg. from database storage using any ORM or pure PHP to access to it.
 
