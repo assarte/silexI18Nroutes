@@ -14,7 +14,7 @@ use Silex\ServiceProviderInterface;
 class SirServiceProvider implements ServiceProviderInterface {
 	public function register(Application $app)
 	{
-		$app['sir'] = $app->protect(new LoaderManager($app));
+		$app['sir'] = new LoaderManager($app);
 	}
 
 	public function boot(Application $app)
