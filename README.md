@@ -166,7 +166,8 @@ The method `redirectSir()` has 3 more arguments detailed below:
  * `$routeName`: for defining a different route than the current one
  * `$args`: for defining different route arguments than the currents are
  * `$get`: for defining different HTTP GET parameters than the currents are
-On redirection, SIR adding an `X-Sir-Redirection` HTTP header with value of `1` and "_locale_switched_from" GET parameter to the response, this could be checked on redirected target to be getting informed about the reason of redirection.
+
+On redirection, SIR adding an `X-Sir-Redirection` HTTP header with value of `1` and `_locale_switched_from` GET parameter to the response, this could be checked on redirected target to be getting informed about the reason of redirection.
 
 ## Suggestions for usage
 `\Sir\ArrayLoader` could be used best for loading static routes from configuration files, while `\Sir\CallbackLoader` could be better for use as dynamic contents route provider eg. from database storage using any ORM or pure PHP to access to it.
