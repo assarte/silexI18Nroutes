@@ -40,7 +40,7 @@ class LoaderManager {
 	/**
 	 * Adds the route-loader
 	 * @param LoaderInterface $loader
-	 * @param null $key Specifying a key grants key-based access to loader
+	 * @param string|null $key Specifying a key grants key-based access to loader
 	 * @return LoaderInterface
 	 */
 	public function add(LoaderInterface $loader, $key=null) {
@@ -55,7 +55,7 @@ class LoaderManager {
 
 	/**
 	 * Returns loader by key or NULL on non-existent loader
-	 * @param $key
+	 * @param string $key
 	 * @return LoaderInterface|null
 	 */
 	public function get($key) {
@@ -87,7 +87,7 @@ class LoaderManager {
 
 	/**
 	 * Returns a node's route.
-	 * @param $node Name of a controller collection
+	 * @param string $node Name of a controller collection
 	 * @return mixed
 	 * @throws RouteNotExistsException
 	 */
@@ -102,7 +102,7 @@ class LoaderManager {
 	/**
 	 * Registers routes for given node (controller collection).
 	 * @param string $node
-	 * @return Silex\ControllerCollection
+	 * @return \Silex\ControllerCollection
 	 * @throws \RuntimeException
 	 * @throws RouteNotExistsException
 	 * @throws \InvalidArgumentException
@@ -113,7 +113,7 @@ class LoaderManager {
 			throw new \RuntimeException('You must call loadRoutes() before registering routes for a node.');
 		}
 
-		if (!isset($this->routes[$node]) or !isset($this->routes[$node]['classname']) or !isset($this->routes[$node]['routes'])) {
+		if (!isset($this->routes[$node]) or !isset($this->routes[$node]['controller']) or !isset($this->routes[$node]['routes'])) {
 			throw new RouteNotExistsException($node);
 		}
 
