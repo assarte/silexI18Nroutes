@@ -1,5 +1,5 @@
 {
-	"name": "webapper/silexI18Nroutes",
+	"name": "webapper/silexi18nroutes",
 	"description": "A simple Silex service provider for declaring multi-lingual (I18N) routes",
 	"license": "CC-4.0",
 	"authors": [
