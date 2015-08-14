@@ -119,7 +119,7 @@ Example contents of `routes.json` file:
  * `path`: The path used for the route. This is relative to the parent node's path.
  * `method`: One or more HTTP methods, separated by `|`, to register the route for.
  * `action`: Named action method (or in "class::method"-form) which would be executed on this route.
- * `convert': Array of argument converters - see: http://silex.sensiolabs.org/doc/usage.html#route-variable-converters
+ * `convert`: Array of argument converters - see: http://silex.sensiolabs.org/doc/usage.html#route-variable-converters
  * `assert`: Array of argument assertions - see: http://silex.sensiolabs.org/doc/usage.html#requirements
  * `defaults`: Array of argument default values - see: http://silex.sensiolabs.org/doc/usage.html#default-values
  * `bind`: Name of route - see: http://silex.sensiolabs.org/doc/usage.html#named-routes
