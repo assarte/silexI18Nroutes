@@ -1,3 +1,7 @@
+# REPOSITORY CHANGES!
+
+This repository is no longer maintained, moved to https://github.com/Webapper/silexi18nroutes for helping my OS projects to be organized better! I apologies your inconvenience.
+
 # silexI18Nroutes
 A simple Silex service provider for declaring multi-lingual (I18N) routes
 
